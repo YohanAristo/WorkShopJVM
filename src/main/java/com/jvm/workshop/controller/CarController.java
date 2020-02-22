@@ -35,7 +35,15 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public Car updateCarById(/*@PathVariable("id") Long id,*/ @RequestBody Car car){
-        return carRepository.save(car);
+    public Car updateCarById(@PathVariable(value = "id")  Long id, @RequestBody Car car){
+        Car carFound = carRepository.findById(id).get();
+
+        carFound.setBrand(car.getBrand());
+        carFound.setColor(car.getColor());
+        carFound.setModel(car.getModel());
+        carFound.setYear(car.getYear());
+        carFound.setFuel(car.getFuel());
+
+        return carRepository.save(carFound);
     }
 }
